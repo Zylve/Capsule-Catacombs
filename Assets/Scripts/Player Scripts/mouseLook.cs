@@ -13,6 +13,7 @@ public class mouseLook : MonoBehaviour
     private float xRotation = 0f;
     [SerializeField] private Camera cam;
     [SerializeField] private AudioListener aListener;
+    public AudioSource aSource;
     private PhotonView view;
     public bool isPaused = false;
     private Transform playerTransform;
@@ -20,7 +21,10 @@ public class mouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
         playerTransform = transform.root.GetComponent<Transform>();
+
+        aSource = GetComponent<AudioSource>();
         view = GetComponent<PhotonView>();
         if(!view.IsMine)
         {

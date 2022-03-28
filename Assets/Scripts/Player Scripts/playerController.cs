@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
@@ -11,6 +10,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     public float jumpHeight;
     public int health = 100;
     public int score = 0;
+    public string nickName;
 
     [Header("Debug")]
     [SerializeField] private float xInput;
@@ -19,7 +19,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] float groundDistance;
     [SerializeField] LayerMask groundMask;
     [SerializeField] bool isGrounded;
-    private CharacterController cController;
+    public CharacterController cController;
     private Vector3 movementVector;
     private Transform groundCheck;
     private PhotonView view;
@@ -31,6 +31,8 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject pauseMenu;
     private Canvas canvas;
     private Renderer[] visuals;
+    private Light playerLight;
+    public Camera miniMapCam;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -53,15 +55,18 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
         view = GetComponent<PhotonView>();
 
+        playerLight = GetComponentInChildren<Light>();
         canvas = GetComponentInChildren<Canvas>();
-        
-
-        cController = GetComponent<CharacterController>();
         visuals = GetComponentsInChildren<Renderer>();
 
         if(!view.IsMine)
         {
+            miniMapCam.enabled = false;
             canvas.enabled = false;
+            playerLight.enabled = false;
+        }else{
+            nickName = SystemInfo.deviceName;
+            view.Owner.NickName = nickName;
         }
 
         score = 0;
@@ -136,7 +141,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         setRenderers(false);
         GetComponent<CharacterController>().enabled = false;
-        transform.position = new Vector3(Random.Range(-20, 20), 5, Random.Range(-20, 20));
+        transform.position = new Vector3(Random.Range(-3.5f, 95), 5, Random.Range(-20, 77));
         yield return new WaitForSeconds(1f);
         health = 100;
         textHealth.text = ($"Health: {health}%");
@@ -152,7 +157,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
     public void healthMethod(int damage, GameObject gameObj, bool addsHealth)
     {
-        health += damage;
+        health -= damage;
         textHealth.text = ($"Health: {health}");
         if(health <= 0)
         {

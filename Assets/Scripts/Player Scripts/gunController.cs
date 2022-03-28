@@ -12,9 +12,11 @@ public class gunController : MonoBehaviour
     private Camera cam;
     private ParticleSystem pSystemShoot;
     private Animator anim;
+    private AudioSource aSource;
     private PhotonView view;
     private LineRenderer lRender;
     public bool isPaused = false;
+    public AudioClip aClip;
 
     [Header("Debug")]
     [SerializeField] private float nextFireTime = 0f;
@@ -25,6 +27,7 @@ public class gunController : MonoBehaviour
         cam = transform.parent.GetComponent<Camera>();
         pSystemShoot = GetComponentInChildren<ParticleSystem>();
         lRender = GetComponent<LineRenderer>();
+        aSource = GetComponentInParent<mouseLook>().aSource;
         view = GetComponent<PhotonView>();
 
         lRender.enabled = false;
@@ -47,6 +50,7 @@ public class gunController : MonoBehaviour
     {
         pSystemShoot.Play();
         StartCoroutine(playAnim());
+        aSource.PlayOneShot(aClip, 1);
         RaycastHit hit;
         if(Physics.Raycast(cam.gameObject.transform.position, cam.transform.forward, out hit, 100))
         {

@@ -4,8 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 
 public class roomManager : MonoBehaviourPunCallbacks
-{
-    // Start is called before the first frame update
+{    // Start is called before the first frame update
     void Start()
     {
         
@@ -31,5 +30,4 @@ public class roomManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("Game");
     }
-    
 }
