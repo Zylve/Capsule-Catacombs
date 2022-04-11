@@ -237,8 +237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 4
   damage: 10
-  isPaused: 0
   aClip: {fileID: 8300000, guid: a793924c2f292c84cb833aeac139e7b2, type: 3}
+  isPaused: 0
   nextFireTime: 0
 --- !u!95 &154409763656719683
 Animator:
@@ -1348,7 +1348,6 @@ MonoBehaviour:
   jumpHeight: 5
   health: 100
   score: 0
-  nickName: 
   xInput: 0
   zInput: 0
   velocity: {x: 0, y: 0, z: 0}
