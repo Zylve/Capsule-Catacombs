@@ -20,3 +20,14 @@ In the top left you can see your current stats such as your score or health.
 
 ### Objective
 Kill people
+
+## TODO
+
+- Update the gun model
+- Implement a countdown timer
+- Implement a match length timer
+- Nicknames
+  - End of game comparisons
+  - In game leaderboards
+- More maps (+ map selector in the room)
+- Stats saved to disk
