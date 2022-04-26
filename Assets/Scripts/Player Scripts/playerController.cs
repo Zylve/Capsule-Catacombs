@@ -188,7 +188,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
         // Resets the player's health.
         health = 100;
-        textHealth.text = ($"Health: {health}%");
+        textHealth.text = ($"Health: {health}");
 
         // Reenables the character controller.
         GetComponent<CharacterController>().enabled = true;
