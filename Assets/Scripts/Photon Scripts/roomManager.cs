@@ -127,6 +127,9 @@ public class roomManager : MonoBehaviourPunCallbacks
     // Start method. Anything that needs to be done upon loading the scene will be put here
     public void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.AutomaticallySyncScene = true;
+        }
     }
 }
