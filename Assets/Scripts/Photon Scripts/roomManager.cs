@@ -23,6 +23,7 @@ public class roomManager : MonoBehaviourPunCallbacks
     [Header("UI components")]
     public TextMeshProUGUI playerCount; 
     public TextMeshProUGUI roomName;
+    public TextMeshProUGUI nickname;
     public GameObject startGame;
 
     // Creates the room when the create button is clicked.
@@ -131,5 +132,6 @@ public class roomManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.AutomaticallySyncScene = true;
         }
+        nickname.text = $"Nickname: {PhotonNetwork.NickName}";
     }
 }

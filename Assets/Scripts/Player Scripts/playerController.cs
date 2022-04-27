@@ -36,6 +36,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("UI & Micellaneous")]
     public TextMeshProUGUI textHealth;
     public TextMeshProUGUI textScore;
+    public TextMeshProUGUI textNickname;
     public GameObject pauseMenu;
     private Canvas canvas;
     private Renderer[] visuals;
@@ -72,6 +73,8 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
         playerLight = GetComponentInChildren<Light>();
         canvas = GetComponentInChildren<Canvas>();
         visuals = GetComponentsInChildren<Renderer>();
+
+        textNickname.text = PhotonNetwork.NickName;
 
         // Checks if the PhotonView is ours, if it isn't, disable elements from other player.s
         if(!view.IsMine)
