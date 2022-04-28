@@ -10,7 +10,14 @@
         "Assets/Animations": true,
         "Assets/External": true,
         "Assets/Materials": true,
-        "Assets/Resources": true
+        "Assets/Resources": true,
+        "Library": true,
+        "obj/*.*": true,
+        "obj/Debug": true,
+        "obj": true,
+        "Temp/bin/Debug": true,
+        "Temp/bin": true,
+        "Temp": true
     },
     "editor.bracketPairColorization.enabled": true,
     "explorerExclude.backup": null
