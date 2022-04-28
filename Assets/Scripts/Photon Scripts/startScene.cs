@@ -15,6 +15,5 @@ public class startScene : MonoBehaviour
     public void updateNickname(string _nickname)
     {
         PhotonNetwork.NickName = _nickname;
-        Debug.Log(PhotonNetwork.NickName);
     }
 }

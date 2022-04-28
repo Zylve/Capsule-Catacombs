@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
@@ -48,6 +49,7 @@ public class roomManager : MonoBehaviourPunCallbacks
         }
     }
 
+    // Loads the map when the masterclient calls for it.
     public void loadMap()
     {
         if(PhotonNetwork.IsMasterClient)
@@ -98,6 +100,17 @@ public class roomManager : MonoBehaviourPunCallbacks
     {
         creationScene.SetActive(true);
         lobbyScene.SetActive(false);
+    }
+
+    // Leaves the photon lobby and returns to the title screen
+    public void leaveLobby()
+    {
+        PhotonNetwork.LeaveLobby();
+    }
+
+    public override void OnLeftLobby()
+    {
+        SceneManager.LoadScene("Start Scene");
     }
 
     // Rejoins the lobby so that you are able to reconnect to other rooms.
