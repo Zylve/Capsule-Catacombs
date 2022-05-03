@@ -13,7 +13,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     public float jumpHeight;
     public int health = 100;
     public int score = 0;
-    
+
     // Debug values, nothing more than just current positions and velocities.
     [Header("Debug")]
     [SerializeField] private float xInput;
@@ -82,6 +82,8 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
             miniMapCam.enabled = false;
             canvas.enabled = false;
             playerLight.enabled = false;
+        }else{
+            transform.Find("Nickname canvas").Find("Nickname").gameObject.SetActive(false);
         }
 
         // Resets the score.
@@ -96,8 +98,19 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
             movePlayer();
         }
 
-        // Checks for the escape key.
-        if(Input.GetKeyDown(KeyCode.Escape)) 
+        pauseGame();
+        billboardEffect();
+    }
+
+    private void billboardEffect()
+    {
+
+    }
+
+    // Checks for the escape key.
+    private void pauseGame()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             // Flips the isPaused boolean.
             isPaused = !isPaused;
