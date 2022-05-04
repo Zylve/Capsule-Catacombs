@@ -24,8 +24,5 @@ Kill people
 ## TODO
 
 - Implement a countdown timer
-- Implement a match length timer
-- Nicknames ✓
-  - End of game comparisons
-  - In game leaderboards
+- Implement a match length time.
 - Stats saved to disk
