@@ -1,18 +1,39 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class scoreManager : MonoBehaviour
+public class scoreManager : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject leaderboardBG;
+    public GameObject defaultInfo;
+    public List<playerInfo> playerList = new List<playerInfo>();
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
+        var photonViews = UnityEngine.Object.FindObjectsOfType<PhotonView>();
+        foreach(var pView in photonViews)
+        {
+            var player = pView.Owner;
+            if(player!=null)
+            {
+                playerInfo pInfo = new playerInfo(pView);
+                playerList.Add(pInfo);
+            }
+        }
+    }
+}
+
+
+// OOP yayaya
+public class playerInfo
+{
+    public PhotonView playerView;
+    public int playerScore;
+
+    public playerInfo(PhotonView pView)
+    {
+        playerView = pView;
+        playerScore = pView.gameObject.GetComponent<playerController>().score;
     }
 }

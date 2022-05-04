@@ -102,7 +102,7 @@ public class gunController : MonoBehaviour
         yield break;
     }
 
-    // Line renderer co-routine
+    // Line renderer co-routine.
     public IEnumerator drawLine(RaycastHit hit)
     {
         lRender.enabled = true;
