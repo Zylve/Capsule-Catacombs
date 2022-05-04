@@ -85,7 +85,7 @@ public class gunController : MonoBehaviour
             if(playerController != null && playerController != transform.root.GetComponent<playerController>())
             {
                 playerController.healthMethod(damage, gameObject);
-                transform.root.GetComponent<playerController>().shots++;
+                transform.root.GetComponent<playerController>().hits++;
             }
 
             // Starts the co-routine for drawing the line effect
