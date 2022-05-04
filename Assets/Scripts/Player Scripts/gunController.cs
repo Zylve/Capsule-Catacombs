@@ -54,6 +54,9 @@ public class gunController : MonoBehaviour
                 
                 // Send out a Shoot RPC.
                 view.RPC("shoot", RpcTarget.All);
+
+                // Increments shot count.
+                transform.root.GetComponent<playerController>().shots++;
             }
         }
     }
@@ -79,9 +82,10 @@ public class gunController : MonoBehaviour
         {
             // Checks if you hit another player. If so, get their playerController script and decrease their health.
             playerController playerController = hit.transform.GetComponent<playerController> ();
-            if(playerController != null && playerController != GetComponentInParent<playerController>())
+            if(playerController != null && playerController != transform.root.GetComponent<playerController>())
             {
                 playerController.healthMethod(damage, gameObject);
+                transform.root.GetComponent<playerController>().shots++;
             }
 
             // Starts the co-routine for drawing the line effect

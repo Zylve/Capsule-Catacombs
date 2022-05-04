@@ -13,6 +13,8 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     public float jumpHeight;
     public int health = 100;
     public int score = 0;
+    public int shots = 0;
+    public int hits = 0;
 
     // Debug values, nothing more than just current positions and velocities.
     [Header("Debug")]
@@ -38,10 +40,10 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     public TextMeshProUGUI textScore;
     public TextMeshProUGUI textNickname;
     public GameObject pauseMenu;
+    public Camera miniMapCam;
     private Canvas canvas;
     private Renderer[] visuals;
     private Light playerLight;
-    public Camera miniMapCam;
 
     // Writes and recieves the health and score values to and from the cloud.
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -50,11 +52,15 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             stream.SendNext(health);
             stream.SendNext(score);
+            stream.SendNext(shots);
+            stream.SendNext(hits);
         }
         else
         {
             health = (int)stream.ReceiveNext();
             score = (int)stream.ReceiveNext();
+            shots = (int)stream.ReceiveNext();
+            hits = (int)stream.ReceiveNext();
         }
     }
 
@@ -99,12 +105,6 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         pauseGame();
-        billboardEffect();
-    }
-
-    private void billboardEffect()
-    {
-
     }
 
     // Checks for the escape key.
