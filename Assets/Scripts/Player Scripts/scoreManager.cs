@@ -34,6 +34,6 @@ public class playerInfo
     public playerInfo(PhotonView pView)
     {
         playerView = pView;
-        playerScore = pView.gameObject.GetComponent<playerController>().score;
+        playerScore = pView.transform.root.GetComponent<playerController>().score;
     }
 }
