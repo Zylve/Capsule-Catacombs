@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -20,6 +21,11 @@ public class scoreManager : MonoBehaviourPunCallbacks
                 playerInfo pInfo = new playerInfo(pView);
                 playerList.Add(pInfo);
             }
+        }
+        playerList.Sort(new Comparison<playerInfo>((x, y) => x.playerScore.CompareTo(y.playerScore)));
+        foreach (var item in playerList)
+        {
+            Debug.Log(item.playerView.name + item.playerScore);
         }
     }
 }
