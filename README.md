@@ -23,11 +23,9 @@ Kill people
 
 ## TODO
 
-- Update the gun model
 - Implement a countdown timer
 - Implement a match length timer
-- Nicknames
+- Nicknames ✓
   - End of game comparisons
   - In game leaderboards
-- More maps (+ map selector in the room)
 - Stats saved to disk
