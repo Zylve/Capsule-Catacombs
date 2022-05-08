@@ -43,6 +43,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     public TextMeshProUGUI textNickname;
     public GameObject pauseMenu;
     public Camera miniMapCam;
+    public TextMeshProUGUI matchTimer;
     private Canvas canvas;
     private Renderer[] visuals;
     private Light playerLight;
@@ -102,7 +103,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
         // Resets the score.
         score = 0;
         
-        StartCoroutine(decrementTimer(false));
+        StartCoroutine(decrementTimer());
     }
 
     void Update()
@@ -113,7 +114,6 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
             movePlayer();
         }
         pauseGame();
-        Debug.Log(timeUntilEnd);
     }
 
     // Checks for the escape key.
@@ -222,25 +222,20 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
         setRenderers(true);
     }
 
-    IEnumerator decrementTimer(bool endGame)
+    IEnumerator decrementTimer()
     {
         canControl = true;
         while(timeUntilEnd != 0)
         {
             yield return new WaitForSecondsRealtime(1);
             timeUntilEnd--;
+            matchTimer.text = $"Time left: {timeUntilEnd}";
         }
         canControl = false;
         GetComponentInChildren<gunController>().canControl = false;
         GetComponentInChildren<mouseLook>().canControl = false;
 
         yield break;
-    }
-
-    [PunRPC]
-    private void resartTimer()
-    {
-        StartCoroutine(decrementTimer(true));
     }
 
     // Gives score to the player who killed you.
