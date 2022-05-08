@@ -20,8 +20,9 @@ public class mouseLook : MonoBehaviour
     [SerializeField] private AudioListener aListener;
     public AudioSource aSource;
     private PhotonView view;
-    public bool isPaused = false;
     private Transform playerTransform;
+    public bool isPaused = false;
+    public bool canControl = true;
 
     void Start()
     {
@@ -47,7 +48,7 @@ public class mouseLook : MonoBehaviour
         // Checks if the view is ours, if so, run the playerRotate method if the game is not paused.
         if(view.IsMine == true)
         {
-            if(isPaused == false)
+            if(isPaused == false && canControl == true)
             {
                 playerRotate();
             }

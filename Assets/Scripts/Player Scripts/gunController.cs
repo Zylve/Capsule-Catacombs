@@ -21,6 +21,7 @@ public class gunController : MonoBehaviour
 
     // Boolean for checking whether the game is paused.
     public bool isPaused = false;
+    public bool canControl = false;
 
     [Header("Debug")]
 
@@ -44,7 +45,7 @@ public class gunController : MonoBehaviour
     void Update()
     {
         // Checks if the PhotonView is ours.
-        if(view.IsMine == true)
+        if(view.IsMine == true && canControl == true)
         {
             // Checks if we have clicked / pressed the fire key.
             if(Input.GetButton("Fire1") && Time.time >= nextFireTime && isPaused == false)

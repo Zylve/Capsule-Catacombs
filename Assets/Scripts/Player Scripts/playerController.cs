@@ -24,6 +24,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] float groundDistance;
     [SerializeField] LayerMask groundMask;
     [SerializeField] bool isGrounded;
+    public float timeUntilEnd = 10;
 
     // Component References.
     public CharacterController cController;
@@ -33,6 +34,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
     // Boolean for checking whether the game is paused.
     public bool isPaused = false;
+    public bool canControl = false;
 
     // User Interface and other component references.
     [Header("UI & Micellaneous")]
@@ -54,6 +56,10 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(score);
             stream.SendNext(shots);
             stream.SendNext(hits);
+            if(PhotonNetwork.IsMasterClient)
+            {
+                stream.SendNext(timeUntilEnd);
+            }
         }
         else
         {
@@ -61,6 +67,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
             score = (int)stream.ReceiveNext();
             shots = (int)stream.ReceiveNext();
             hits = (int)stream.ReceiveNext();
+            timeUntilEnd = (float)stream.ReceiveNext();
         }
     }
 
@@ -94,17 +101,19 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
         // Resets the score.
         score = 0;
+        
+        StartCoroutine(decrementTimer(false));
     }
 
     void Update()
     {
         // Checks if the score is ours, if so, then call the movePlayer method.
-        if(view.IsMine == true)
+        if(view.IsMine == true && canControl == true)
         {
             movePlayer();
         }
-
         pauseGame();
+        Debug.Log(timeUntilEnd);
     }
 
     // Checks for the escape key.
@@ -211,6 +220,32 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
         // Makes the player visible again.
         setRenderers(true);
+    }
+
+    IEnumerator decrementTimer(bool endGame)
+    {
+        while(timeUntilEnd != 0)
+        {
+            yield return new WaitForSecondsRealtime(1);
+            timeUntilEnd--;
+        }
+        canControl = true;
+        GetComponentInChildren<gunController>().canControl = !GetComponentInChildren<gunController>().canControl;
+        GetComponentInChildren<mouseLook>().canControl = !GetComponentInChildren<mouseLook>().canControl;
+        
+        if(PhotonNetwork.IsMasterClient && endGame == false)
+        {
+            
+            view.RPC("resartTimer", RpcTarget.All);
+        }
+        timeUntilEnd = 10;
+        yield break;
+    }
+
+    [PunRPC]
+    private void resartTimer()
+    {
+        StartCoroutine(decrementTimer(true));
     }
 
     // Gives score to the player who killed you.
