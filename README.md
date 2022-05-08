@@ -23,6 +23,5 @@ Kill people
 
 ## TODO
 
-- Implement a countdown timer
 - Implement a match length time.
 - Stats saved to disk
