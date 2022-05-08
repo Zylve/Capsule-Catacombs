@@ -22,6 +22,5 @@ In the top left you can see your current stats such as your score or health.
 Kill people
 
 ## TODO
-
 - Implement a match length time.
 - Stats saved to disk

@@ -21,7 +21,7 @@ public class gunController : MonoBehaviour
 
     // Boolean for checking whether the game is paused.
     public bool isPaused = false;
-    public bool canControl = false;
+    public bool canControl = true;
 
     [Header("Debug")]
 

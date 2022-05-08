@@ -24,7 +24,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] float groundDistance;
     [SerializeField] LayerMask groundMask;
     [SerializeField] bool isGrounded;
-    public float timeUntilEnd = 10;
+    public float timeUntilEnd = 300;
 
     // Component References.
     public CharacterController cController;
@@ -34,7 +34,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
     // Boolean for checking whether the game is paused.
     public bool isPaused = false;
-    public bool canControl = false;
+    public bool canControl = true;
 
     // User Interface and other component references.
     [Header("UI & Micellaneous")]
@@ -224,21 +224,16 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
     IEnumerator decrementTimer(bool endGame)
     {
+        canControl = true;
         while(timeUntilEnd != 0)
         {
             yield return new WaitForSecondsRealtime(1);
             timeUntilEnd--;
         }
-        canControl = true;
-        GetComponentInChildren<gunController>().canControl = !GetComponentInChildren<gunController>().canControl;
-        GetComponentInChildren<mouseLook>().canControl = !GetComponentInChildren<mouseLook>().canControl;
-        
-        if(PhotonNetwork.IsMasterClient && endGame == false)
-        {
-            
-            view.RPC("resartTimer", RpcTarget.All);
-        }
-        timeUntilEnd = 10;
+        canControl = false;
+        GetComponentInChildren<gunController>().canControl = false;
+        GetComponentInChildren<mouseLook>().canControl = false;
+
         yield break;
     }
 
