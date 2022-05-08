@@ -140,7 +140,6 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
             // If it is not paused, hide it.
             }else{
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-
                 pauseMenu.SetActive(false);
 
                 GetComponentInChildren<mouseLook>().isPaused = isPaused;
