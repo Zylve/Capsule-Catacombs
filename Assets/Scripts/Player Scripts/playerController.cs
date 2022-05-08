@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using Photon.Pun;
 
@@ -24,7 +25,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] float groundDistance;
     [SerializeField] LayerMask groundMask;
     [SerializeField] bool isGrounded;
-    public float timeUntilEnd = 300;
+    public float timeUntilEnd = 10;
 
     // Component References.
     public CharacterController cController;
@@ -44,6 +45,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject pauseMenu;
     public Camera miniMapCam;
     public TextMeshProUGUI matchTimer;
+    public GameObject endGameBackground;
     private Canvas canvas;
     private Renderer[] visuals;
     private Light playerLight;
@@ -120,7 +122,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     // Checks for the escape key.
     private void pauseGame()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && canControl == true)
         {
             // Flips the isPaused boolean.
             isPaused = !isPaused;
@@ -236,7 +238,9 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
         canControl = false;
         GetComponentInChildren<gunController>().canControl = false;
         GetComponentInChildren<mouseLook>().canControl = false;
-
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        endGameBackground.SetActive(true);
+        endGameBackground.transform.Find("score").GetComponent<TextMeshProUGUI>().text = $"Score: {score}";
         yield break;
     }
 
@@ -260,5 +264,12 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
             gameObj.transform.root.GetComponent<playerController>().giveScore();
             StartCoroutine(respawn());
         }
+    }
+
+    // Returns to the Main Menu
+    public void returnToMenu()
+    {
+        SceneManager.LoadScene("Start Scene");
+        PhotonNetwork.Disconnect();
     }
 }
