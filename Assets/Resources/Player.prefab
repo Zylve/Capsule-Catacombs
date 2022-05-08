@@ -1973,7 +1973,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isGrounded: 0
-  timeUntilEnd: 10
+  timeUntilEnd: 300
   cController: {fileID: 4695335619150443077}
   isPaused: 0
   canControl: 1

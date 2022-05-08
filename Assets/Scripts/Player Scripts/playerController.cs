@@ -25,7 +25,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] float groundDistance;
     [SerializeField] LayerMask groundMask;
     [SerializeField] bool isGrounded;
-    public float timeUntilEnd = 10;
+    public float timeUntilEnd = 300;
 
     // Component References.
     public CharacterController cController;
