@@ -102,7 +102,8 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
 
         // Resets the score.
         score = 0;
-        
+
+        // Starts the match timer.
         StartCoroutine(decrementTimer());
     }
 
@@ -222,6 +223,7 @@ public class playerController : MonoBehaviourPunCallbacks, IPunObservable
         setRenderers(true);
     }
 
+    // Decrements the timer every second and prevents control after it has run out.
     IEnumerator decrementTimer()
     {
         canControl = true;
